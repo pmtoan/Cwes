@@ -12,6 +12,7 @@ char* STRING_shift(const char* string, int byte);
 char* STRING_cut(const char* string, char to);
 char* STRING_extract(const char* string, char to);
 char** STRING_split(const char* string, const char* delimiter, int times);
+char* STRING_to_ascii(const char* string);
 /*----------------------------------------------------------------*/
 
 
@@ -193,6 +194,109 @@ char** STRING_split(const char* string, const char* delimiter, int times)
         i++;
     }
     rt[i] = strdup(STRING_replace(tmp, "\v", delimiter));
+    return rt;
+}
+
+char* STRING_to_ascii(const char* string)
+{
+    /*
+     *  todo @STRING_to_ascii convert a string to valid ASCII string
+    */
+    char* rt = STRING_replace(string, "%20", " ");
+    rt = STRING_replace(rt, "%21", "!");
+    rt = STRING_replace(rt, "%22", "\"");
+    rt = STRING_replace(rt, "%23", "#");
+    rt = STRING_replace(rt, "%24", "$");
+    rt = STRING_replace(rt, "%25", "%");
+    rt = STRING_replace(rt, "%26", "&");
+    rt = STRING_replace(rt, "%27", "'");
+    rt = STRING_replace(rt, "%28", "(");
+    rt = STRING_replace(rt, "%29", ")");
+    rt = STRING_replace(rt, "%2A", "*");
+    rt = STRING_replace(rt, "%2B", "+");
+    rt = STRING_replace(rt, "%2C", ",");
+    rt = STRING_replace(rt, "%2D", "-");
+    rt = STRING_replace(rt, "%2E", ".");
+    rt = STRING_replace(rt, "%2F", "/");
+    rt = STRING_replace(rt, "%30", "0");
+    rt = STRING_replace(rt, "%31", "1");
+    rt = STRING_replace(rt, "%32", "2");
+    rt = STRING_replace(rt, "%33", "3");
+    rt = STRING_replace(rt, "%34", "4");
+    rt = STRING_replace(rt, "%35", "5");
+    rt = STRING_replace(rt, "%36", "6");
+    rt = STRING_replace(rt, "%37", "7");
+    rt = STRING_replace(rt, "%38", "8");
+    rt = STRING_replace(rt, "%39", "9");
+    rt = STRING_replace(rt, "%3A", ":");
+    rt = STRING_replace(rt, "%3B", ";");
+    rt = STRING_replace(rt, "%3C", "<");
+    rt = STRING_replace(rt, "%3D", "=");
+    rt = STRING_replace(rt, "%3E", ">");
+    rt = STRING_replace(rt, "%3F", "?");
+    rt = STRING_replace(rt, "%40", "@");
+    rt = STRING_replace(rt, "%41", "A");
+    rt = STRING_replace(rt, "%42", "B");
+    rt = STRING_replace(rt, "%43", "C");
+    rt = STRING_replace(rt, "%44", "D");
+    rt = STRING_replace(rt, "%45", "E");
+    rt = STRING_replace(rt, "%46", "F");
+    rt = STRING_replace(rt, "%47", "G");
+    rt = STRING_replace(rt, "%48", "H");
+    rt = STRING_replace(rt, "%49", "I");
+    rt = STRING_replace(rt, "%4A", "J");
+    rt = STRING_replace(rt, "%4B", "K");
+    rt = STRING_replace(rt, "%4C", "L");
+    rt = STRING_replace(rt, "%4D", "M");
+    rt = STRING_replace(rt, "%4E", "N");
+    rt = STRING_replace(rt, "%4F", "O");
+    rt = STRING_replace(rt, "%50", "P");
+    rt = STRING_replace(rt, "%51", "Q");
+    rt = STRING_replace(rt, "%52", "R");
+    rt = STRING_replace(rt, "%53", "S");
+    rt = STRING_replace(rt, "%54", "T");
+    rt = STRING_replace(rt, "%55", "U");
+    rt = STRING_replace(rt, "%56", "V");
+    rt = STRING_replace(rt, "%57", "W");
+    rt = STRING_replace(rt, "%58", "X");
+    rt = STRING_replace(rt, "%59", "Y");
+    rt = STRING_replace(rt, "%5A", "Z");
+    rt = STRING_replace(rt, "%5B", "[");
+    rt = STRING_replace(rt, "%5C", "\\");
+    rt = STRING_replace(rt, "%5D", "]");
+    rt = STRING_replace(rt, "%5E", "^");
+    rt = STRING_replace(rt, "%5F", "_");
+    rt = STRING_replace(rt, "%60", "_");
+    rt = STRING_replace(rt, "%61", "a");
+    rt = STRING_replace(rt, "%62", "b");
+    rt = STRING_replace(rt, "%63", "c");
+    rt = STRING_replace(rt, "%64", "d");
+    rt = STRING_replace(rt, "%65", "e");
+    rt = STRING_replace(rt, "%66", "f");
+    rt = STRING_replace(rt, "%67", "g");
+    rt = STRING_replace(rt, "%68", "h");
+    rt = STRING_replace(rt, "%69", "i");
+    rt = STRING_replace(rt, "%6A", "j");
+    rt = STRING_replace(rt, "%6B", "k");
+    rt = STRING_replace(rt, "%6C", "l");
+    rt = STRING_replace(rt, "%6D", "m");
+    rt = STRING_replace(rt, "%6E", "n");
+    rt = STRING_replace(rt, "%6F", "o");
+    rt = STRING_replace(rt, "%70", "p");
+    rt = STRING_replace(rt, "%71", "q");
+    rt = STRING_replace(rt, "%72", "r");
+    rt = STRING_replace(rt, "%73", "s");
+    rt = STRING_replace(rt, "%74", "t");
+    rt = STRING_replace(rt, "%75", "u");
+    rt = STRING_replace(rt, "%76", "v");
+    rt = STRING_replace(rt, "%77", "w");
+    rt = STRING_replace(rt, "%78", "x");
+    rt = STRING_replace(rt, "%79", "y");
+    rt = STRING_replace(rt, "%7A", "z");
+    rt = STRING_replace(rt, "%7B", "{");
+    rt = STRING_replace(rt, "%7C", "|");
+    rt = STRING_replace(rt, "%7D", "}");
+    rt = STRING_replace(rt, "%7E", "~");
     return rt;
 }
 

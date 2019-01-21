@@ -138,7 +138,7 @@ LIST_PAIR LIST_PAIR_parse_x_www_form_urlencoded(const char* msg)
 	for (int i = 0; i <= estimate_length; ++i)
 	{
 		char** pair = STRING_split(pairs[i], "=", 1);
-		LIST_PAIR_append(&list, pair[0], pair[1]);
+		LIST_PAIR_append(&list, STRING_to_ascii(pair[0]), STRING_to_ascii(pair[1]));
 		free(pair[0]);
 		free(pair[1]);
 		free(pair);
