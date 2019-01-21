@@ -47,3 +47,66 @@ int main()
 
 > Go to http://domain.name/hello.c and get output: "Hello World!"  
 
+* Get http request method, uri  
+```c
+#include <stdio.h>
+#include "../../modules/utilities/utilities.h"
+
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+        printf("\n");
+    else
+    {
+        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        
+        char* method = LIST_PAIR_find(list, "method");
+        char* uri = LIST_PAIR_find(list, "uri");
+
+        LIST_PAIR_free(&list);
+    }
+    return 0;
+}
+```  
+
+* Get request parameters
+```c
+#include <stdio.h>
+#include "../../modules/utilities/utilities.h"
+
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+        printf("\n");
+    else
+    {
+        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        
+        char* value = LIST_PAIR_find(list, "key");
+
+        LIST_PAIR_free(&list);
+    }
+    return 0;
+}
+```  
+
+* Get request headers
+```c
+#include <stdio.h>
+#include "../../modules/utilities/utilities.h"
+
+int main(int argc, char** argv)
+{
+    if (argc < 2)
+        printf("\n");
+    else
+    {
+        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        
+        char* user_agent = LIST_PAIR_find(list, "User-Agent");
+
+        LIST_PAIR_free(&list);
+    }
+    return 0;
+}
+```  
