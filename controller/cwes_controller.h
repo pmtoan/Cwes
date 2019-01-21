@@ -7,8 +7,8 @@
 
 #define __MSG__ "What do you want?"
 
-#define __SOURCE__ROOT__    "./source"
-#define __STATIC_ROOT__     "./static"
+#define __SOURCE__ROOT__    "./sources"
+#define __STATIC_ROOT__     "./statics"
 
 char* CONTROLLER_control_everything(const char* req_msg)
 {
