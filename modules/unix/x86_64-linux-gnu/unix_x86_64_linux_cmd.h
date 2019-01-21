@@ -7,8 +7,6 @@
 #include <unistd.h>
 #include "../../utilities/utilities.h"
 
-#define __TMP_OUTPUT__ "__unix_cmd_tmp__"
-
 /*----------------------------------------------------------------*/
 void UNIX_X86_64_LINUX_silent_cmd(const char* cmd);
 char* UNIX_X86_64_LINUX_cmd(const char* cmd);
@@ -22,12 +20,9 @@ void UNIX_X86_64_LINUX_silent_cmd(const char* cmd)
     char* do_cmd = (char*)malloc(__SIZE_LARGE__);
 
     /* Execute command */
-    sprintf(do_cmd, "%s > %s", cmd, __TMP_OUTPUT__);
+    sprintf(do_cmd, "%s > /dev/null", cmd);
     system(do_cmd);
 
-    /* Clear up */
-    sprintf(do_cmd, "rm -rf %s", __TMP_OUTPUT__);
-    system(do_cmd);
     free(do_cmd);
 
     return;
@@ -38,19 +33,15 @@ char* UNIX_X86_64_LINUX_cmd(const char* cmd)
     /*
      *  todo @UNIX_X86_64_LINUX_cmd execute a command and return output
     */
-    char* do_cmd = (char*)malloc(__SIZE_LARGE__);
+    FILE* fp;
+    fp = popen(cmd, "r");
 
-    /* Execute command */
-    sprintf(do_cmd, "%s > %s", cmd, __TMP_OUTPUT__);
-    system(do_cmd);
+    if (!fp)
+        return "Command error!";
 
-    char* rt = FILE_read_text(__TMP_OUTPUT__);
-
-    /* Clear up */
-    sprintf(do_cmd, "rm -rf %s", __TMP_OUTPUT__);
-    system(do_cmd);
-    free(do_cmd);
-
+    char* rt = (char*)malloc(__SIZE_EXTRA__);
+    fread(rt, __SIZE_EXTRA__, 1, fp);
+    fclose(fp);
     return rt;
 }
 
