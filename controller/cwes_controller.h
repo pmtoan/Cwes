@@ -32,8 +32,18 @@ char* CONTROLLER_control_everything(const char* req_msg)
         return HTTP_RES_compose(HTTP_RES_build_up(__HTTP_NOT_FOUND__, "Object not found"));
 
     /* Found c source file */
-    char* params = LIST_PAIR_compose_string(req.params);
+    char* params = (char*)malloc(__SIZE_LARGE__);
+    sprintf(
+            params,
+            "method=%s&uri=%s&%s&%s",
+            req.method,
+            req.uri,
+            LIST_PAIR_compose_string(req.headers),
+            LIST_PAIR_compose_string(req.params)
+            );
+
     LIST_STRING list = LIST_STRING_init();
+
     LIST_STRING_append(&list, params);
 
     return HTTP_RES_compose(
