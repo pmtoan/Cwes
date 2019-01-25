@@ -9,7 +9,7 @@ int server;
 int main(int argc, char const *argv[])
 {
 	signal(SIGINT,signal_handler);
-    server = tcp_socket_open_listener(__HTTP_PORT__);
+    server = UNIX_X86_64_LINUX_tcp_socket_open_listener(__HTTP_PORT__);
     _("%s - [INFO]   Cwes server running on 0::%d\n", STRING_timestamp(), __HTTP_PORT__);
     struct sockaddr_storage client_addr;
     unsigned int address_size = sizeof(client_addr);
@@ -38,8 +38,8 @@ int main(int argc, char const *argv[])
         if (pid == 0)
         {
             signal(SIGINT, SIG_DFL);
-            tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
-            tcp_socket_send_msg(connect, CONTROLLER_control_everything(message));
+            UNIX_X86_64_LINUX_tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
+            UNIX_X86_64_LINUX_tcp_socket_send_msg(connect, CONTROLLER_control_everything(message));
             close(connect);
         }
         wait(NULL);
