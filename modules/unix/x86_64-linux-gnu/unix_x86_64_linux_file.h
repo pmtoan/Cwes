@@ -1,5 +1,5 @@
-#ifndef UNIX_X86_64_LINUX_FILE_UTILS_H
-#define UNIX_X86_64_LINUX_FILE_UTILS_H
+#ifndef __UNIX_X86_64_LINUX_FILE_UTILS_H__
+#define __UNIX_X86_64_LINUX_FILE_UTILS_H__
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,23 +9,23 @@
 #include <grp.h>
 #include <unistd.h>
 #include <time.h>
-#include "../../utilities/utilities.h"
+#include "../../utilities/utils.h"
 
 /*----------------------------------------------------------------*/
-char* UNIX_X86_64_LINUX_stat_mode(const char* path);
-int UNIX_X86_64_LINUX_stat_type(const char* path);
-char* UNIX_X86_64_LINUX_stat_user(const char* path);
-char* UNIX_X86_64_LINUX_stat_group(const char* path);
-int UNIX_X86_64_LINUX_chmod(const char* path, const char* new_mode);
-int UNIX_X86_64_LINUX_chown(const char* path, const char* new_usr, const char* new_grp);
+char* unix_x86_64_linux_get_stat_mode(const char* path);
+int unix_x86_64_linux_get_stat_type(const char* path);
+char* unix_x86_64_linux_get_stat_user(const char* path);
+char* unix_x86_64_linux_get_stat_group(const char* path);
+int unix_x86_64_linux_change_mode(const char* path, const char* new_mode);
+int unix_x86_64_linux_change_owner(const char* path, const char* new_usr, const char* new_grp);
 /*----------------------------------------------------------------*/
 
 
 
-char* UNIX_X86_64_LINUX_stat_mode(const char* path)
+char* unix_x86_64_linux_get_stat_mode(const char* path)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_stat_mode get a @path mode/ permission
+     *  todo @unix_x86_64_linux_get_stat_mode get a @path mode/ permission
      *  return permission string format if success, return "" on failure
      *  permission string format: "-rwxr-----"
     */
@@ -48,12 +48,12 @@ char* UNIX_X86_64_LINUX_stat_mode(const char* path)
     return permission;
 }
 
-int UNIX_X86_64_LINUX_stat_type(const char* path)
+int unix_x86_64_linux_get_stat_type(const char* path)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_stat_type get type of @path
+     *  todo @unix_x86_64_linux_get_stat_type get type of @path
      *  return -1 on failure
-     *  return 0 id @path is a directory, otherwise, @path is a file
+     *  return 0 if @path is a directory, otherwise, @path is a file
     */
     struct stat sb;
     if ((stat(path, &sb) == -1))
@@ -67,10 +67,10 @@ int UNIX_X86_64_LINUX_stat_type(const char* path)
     }
 }
 
-char* UNIX_X86_64_LINUX_stat_user(const char* path)
+char* unix_x86_64_linux_get_stat_user(const char* path)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_stat_user get username of @path owner
+     *  todo @unix_x86_64_linux_get_stat_user get username of @path owner
      *  return "" on failure
     */
     struct stat sb;
@@ -82,10 +82,10 @@ char* UNIX_X86_64_LINUX_stat_user(const char* path)
     return pws->pw_name;
 }
 
-char* UNIX_X86_64_LINUX_stat_group(const char* path)
+char* unix_x86_64_linux_get_stat_group(const char* path)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_stat_user get group name of @path owner
+     *  todo @unix_x86_64_linux_get_stat_user get group name of @path owner
      *  return "" on failure
     */
     struct stat sb;
@@ -106,7 +106,7 @@ char* UNIX_X86_64_LINUX_stat_lmt(const char* path)
     struct stat sb;
     if ((stat(path, &sb) == -1))
         return "";
-    return STRING_replace(ctime(&sb.st_ctime), "\n", "");
+    return string_replace(ctime(&sb.st_ctime), "\n", "");
 }
 
 char* UNIX_X86_64_LINUX_stat_lat(const char* path)
@@ -118,7 +118,7 @@ char* UNIX_X86_64_LINUX_stat_lat(const char* path)
     struct stat sb;
     if ((stat(path, &sb) == -1))
         return "";
-    return STRING_replace(ctime(&sb.st_atime), "\n", "");
+    return string_replace(ctime(&sb.st_atime), "\n", "");
 }
 
 char* UNIX_X86_64_LINUX_stat_lst(const char* path)
@@ -130,13 +130,13 @@ char* UNIX_X86_64_LINUX_stat_lst(const char* path)
     struct stat sb;
     if ((stat(path, &sb) == -1))
         return "";
-    return STRING_replace(ctime(&sb.st_ctime), "\n", "");
+    return string_replace(ctime(&sb.st_ctime), "\n", "");
 }
 
-int UNIX_X86_64_LINUX_chmod(const char* path, const char* new_mode)
+int unix_x86_64_linux_change_mode(const char* path, const char* new_mode)
 {
     /*
-    *  todo @UNIX_X86_64_LINUX_chmod change file permission
+    *  todo @unix_x86_64_linux_change_mode change file permission
     *  @new_mode format as: -rwxr-----
     */
     mode_t mode = S_IRUSR;
@@ -151,14 +151,14 @@ int UNIX_X86_64_LINUX_chmod(const char* path, const char* new_mode)
     return chmod(path, mode);
 }
 
-int UNIX_X86_64_LINUX_chown(const char* path, const char* new_usr, const char* new_grp)
+int unix_x86_64_linux_change_owner(const char* path, const char* new_usr, const char* new_grp)
 {
     /*
-    * todo @UNIX_X86_64_LINUX_chown change owner and group of a file
+    * todo @unix_x86_64_linux_change_owner change owner and group of a file
     */
     struct group* grp = getgrnam(new_grp);
     struct passwd* pwd = getpwnam(new_usr);
     return chown(path, pwd->pw_uid, grp->gr_gid);
 }
 
-#endif
+#endif  // __UNIX_X86_64_LINUX_FILE_UTILS_H__

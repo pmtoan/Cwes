@@ -21,7 +21,7 @@ Or when user request url http://domain.name/css/style.css, cwes looking for and 
 * Serve C source file  
 cwes can serve C soure file as well which locate in source directory.  
 Example when user request url http://domain.name/hello_world.c, cwes looking for, compile, run, get output and return file ./source/hello_world.c  
-**Note: Request of C source file**  
+**Note: Requests of C source file**  
 > * C source file must have main() function   
 > * C source file can run independently  
 
@@ -50,7 +50,8 @@ int main()
 * Get http request method, uri  
 ```c
 #include <stdio.h>
-#include "../../modules/utilities/utilities.h"
+#include "../../modules/data_structure/list_pair.h"
+#include "../../modules/utilities/utils.h"
 
 int main(int argc, char** argv)
 {
@@ -58,12 +59,12 @@ int main(int argc, char** argv)
         printf("\n");
     else
     {
-        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        LIST_PAIR list = list_pair_parse_x_www_form_urlencoded(argv[1]);
         
-        char* method = LIST_PAIR_find(list, "method");
-        char* uri = LIST_PAIR_find(list, "uri");
+        char* method = list_pair_find(list, "method");
+        char* uri = list_pair_find(list, "uri");
 
-        LIST_PAIR_free(&list);
+        list_pair_free(&list);
     }
     return 0;
 }
@@ -72,7 +73,8 @@ int main(int argc, char** argv)
 * Get request parameters
 ```c
 #include <stdio.h>
-#include "../../modules/utilities/utilities.h"
+#include "../../modules/data_structure/list_pair.h"
+#include "../../modules/utilities/utils.h"
 
 int main(int argc, char** argv)
 {
@@ -80,11 +82,11 @@ int main(int argc, char** argv)
         printf("\n");
     else
     {
-        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        LIST_PAIR list = list_pair_parse_x_www_form_urlencoded(argv[1]);
         
-        char* value = LIST_PAIR_find(list, "key");
+        char* value = list_pair_find(list, "key");
 
-        LIST_PAIR_free(&list);
+        list_pair_free(&list);
     }
     return 0;
 }
@@ -93,7 +95,8 @@ int main(int argc, char** argv)
 * Get request headers
 ```c
 #include <stdio.h>
-#include "../../modules/utilities/utilities.h"
+#include "../../modules/data_structure/list_pair.h"
+#include "../../modules/utilities/utils.h"
 
 int main(int argc, char** argv)
 {
@@ -101,11 +104,11 @@ int main(int argc, char** argv)
         printf("\n");
     else
     {
-        LIST_PAIR list = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        LIST_PAIR list = list_pair_parse_x_www_form_urlencoded(argv[1]);
         
-        char* user_agent = LIST_PAIR_find(list, "User-Agent");
+        char* user_agent = list_pair_find(list, "User-Agent");
 
-        LIST_PAIR_free(&list);
+        list_pair_free(&list);
     }
     return 0;
 }

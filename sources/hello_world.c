@@ -1,5 +1,6 @@
 #include <stdio.h>
-#include "../modules/utilities/utilities.h"
+#include "../modules/data_structure/list_pair.h"
+#include "../modules/utilities/utils.h"
 
 
 int main(int argc, char** argv)
@@ -15,7 +16,7 @@ int main(int argc, char** argv)
                "</html");
     else
     {
-        LIST_PAIR params = LIST_PAIR_parse_x_www_form_urlencoded(argv[1]);
+        LIST_PAIR params = list_pair_parse_x_www_form_urlencoded(argv[1]);
         printf("<html>"
                "<head>"
                "<title>Hello from cwes</title>"
@@ -23,6 +24,6 @@ int main(int argc, char** argv)
                "<body>"
                "<h1>Hello %s</h1>"
                "</body>"
-               "</html", LIST_PAIR_find(params, "name"));
+               "</html", list_pair_find(params, "name"));
     }
 }

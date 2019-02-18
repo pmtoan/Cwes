@@ -1,5 +1,5 @@
-#ifndef __C_MODULES_UNIX_X86_64_LINUX_TCP_SOCKET_H__
-#define __C_MODULES_UNIX_X86_64_LINUX_TCP_SOCKET_H__
+#ifndef __UNIX_X86_64_LINUX_TCP_SOCKET_H__
+#define __UNIX_X86_64_LINUX_TCP_SOCKET_H__
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -18,23 +18,26 @@
 /*
 *   todo @tcp_socket_open_listener create, bind and make socket listen
 */
-int UNIX_X86_64_LINUX_tcp_socket_open_listener(int port);
+int unix_x86_64_linux_tcp_socket_open_listener(int port);
 
 /*
 *   todo @tcp_socket_send_msg send @msg to socket
 */
-int UNIX_X86_64_LINUX_tcp_socket_send_msg(int socket, const char* msg);
+int unix_x86_64_linux_tcp_socket_send_msg(int socket, const char* msg);
 
 /*
 *   todo @tcp_socket_read_msg read array of char into @buf
 */
-int UNIX_X86_64_LINUX_tcp_socket_read_msg(int socket, char* buf, int len);
+int unix_x86_64_linux_tcp_socket_read_msg(int socket, char* buf, int len);
+
+
+
 
 /*===================================================================================
 *       FUNCTION IMPLEMENT
 *==================================================================================*/
 
-int UNIX_X86_64_LINUX_tcp_socket_open_listener(int port)
+int unix_x86_64_linux_tcp_socket_open_listener(int port)
 {   
     int sd;
     sd = socket(AF_INET, SOCK_STREAM, 0);
@@ -49,13 +52,13 @@ int UNIX_X86_64_LINUX_tcp_socket_open_listener(int port)
     return sd;
 }
 
-int UNIX_X86_64_LINUX_tcp_socket_send_msg(int socket, const char* msg)
+int unix_x86_64_linux_tcp_socket_send_msg(int socket, const char* msg)
 {
 	int result = send(socket, msg, strlen(msg), 0);
     return result;
 }
 
-int UNIX_X86_64_LINUX_tcp_socket_read_msg(int socket, char* buf, int len)
+int unix_x86_64_linux_tcp_socket_read_msg(int socket, char* buf, int len)
 {
 	char *s = buf;
     int slen = len;
@@ -69,4 +72,4 @@ int UNIX_X86_64_LINUX_tcp_socket_read_msg(int socket, char* buf, int len)
     return len - slen;
 }
 
-#endif
+#endif  // __UNIX_X86_64_LINUX_TCP_SOCKET_H__

@@ -1,21 +1,21 @@
-#ifndef __C_MODULES_UNIX_X86_64_LINUX_FILE_UTILS_H__
-#define __C_MODULES_UNIX_X86_64_LINUX_FILE_UTILS_H__
+#ifndef __UNIX_X86_64_LINUX_COMMAND_UTILS_H__
+#define __UNIX_X86_64_LINUX_COMMAND_UTILS_H__
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../../utilities/utilities.h"
+#include "../../utilities/utils.h"
 
 /*----------------------------------------------------------------*/
-void UNIX_X86_64_LINUX_silent_cmd(const char* cmd);
-char* UNIX_X86_64_LINUX_cmd(const char* cmd);
+void unix_x86_64_linux_cmd_silent(const char* cmd);
+char* unix_x86_64_linux_cmd(const char* cmd);
 /*----------------------------------------------------------------*/
 
-void UNIX_X86_64_LINUX_silent_cmd(const char* cmd)
+void unix_x86_64_linux_cmd_silent(const char* cmd)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_silent_cmd execute a command line and not get output
+     *  todo @unix_x86_64_linux_cmd_silent execute a command line and not get output
     */
     char* do_cmd = (char*)malloc(__SIZE_LARGE__);
 
@@ -28,10 +28,10 @@ void UNIX_X86_64_LINUX_silent_cmd(const char* cmd)
     return;
 }
 
-char* UNIX_X86_64_LINUX_cmd(const char* cmd)
+char* unix_x86_64_linux_cmd(const char* cmd)
 {
     /*
-     *  todo @UNIX_X86_64_LINUX_cmd execute a command and return output
+     *  todo @unix_x86_64_linux_cmd execute a command and return output
     */
     FILE* fp;
     fp = popen(cmd, "r");
@@ -47,4 +47,4 @@ char* UNIX_X86_64_LINUX_cmd(const char* cmd)
 
 
 
-#endif // __C_MODULES_UNIX_X86_64_LINUX_FILE_UTILS_H__
+#endif // __UNIX_X86_64_LINUX_COMMAND_UTILS_H__

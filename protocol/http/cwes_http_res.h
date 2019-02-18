@@ -3,43 +3,43 @@
 
 #include "cwes_http_format.h"
 
-HTTP_RES HTTP_RES_init()
+HTTP_RES http_res_init()
 {
     /*
-     *	todo @HTTP_RES_init initialize a HTTP_RESPONSE
+     *	todo @http_res_init initialize a HTTP_RESPONSE
      *	usage:
-     *	    HTTP_RES res = HTTP_RES_init()
+     *	    HTTP_RES res = http_res_init()
     */
     HTTP_RES res;
-    res.headers = LIST_PAIR_init();
+    res.headers = list_pair_init();
     return res;
 }
 
-void HTTP_RES_free(HTTP_RES* res)
+void http_res_free(HTTP_RES* res)
 {
     /*
-     *	todo @HTTP_RES_free release memory of a HTTP_RESPONSE
+     *	todo @http_res_free release memory of a HTTP_RESPONSE
      *	usage:
-     *	    HTTP_RES res = HTTP_RES_init()
+     *	    HTTP_RES res = http_res_init()
      *	    ...
-     *	    HTTP_RES_free(&res)
+     *	    http_res_free(&res)
     */
 
     free(res->version);
     free(res->payload);
-    LIST_PAIR_free(&(res->headers));
+    list_pair_free(&(res->headers));
 }
 
-char* HTTP_RES_compose(HTTP_RES res)
+char* http_res_compose(HTTP_RES res)
 {
     /*
-     * 	todo @HTTP_RES_compose compose a HTTP_RESPONSE to string
+     * 	todo @http_res_compose compose a HTTP_RESPONSE to string
      * 	usage:
-     *	    HTTP_RES res = HTTP_RES_init()
+     *	    HTTP_RES res = http_res_init()
      *	    ...
-     * 	    char* msg_response = HTTP_RES_compose(res);
+     * 	    char* msg_response = http_res_compose(res);
      * 	    ...
-     * 	    HTTP_RES_free(&res)
+     * 	    http_res_free(&res)
     */
     char* buffer = (char*)malloc(__SIZE_EXTRA__);
     sprintf(buffer, "%s %d %s\r\n", res.version, res.status.code, res.status.status);
@@ -55,39 +55,39 @@ char* HTTP_RES_compose(HTTP_RES res)
     return response;
 }
 
-void HTTP_RES_set_header(HTTP_RES* res, const char* key, const char* value)
+void http_res_set_header(HTTP_RES* res, const char* key, const char* value)
 {
     /*
-     *  todo @HTTP_RES_set_header set header for a HTTP_RESPONSE
+     *  todo @http_res_set_header set header for a HTTP_RESPONSE
      *  usage:
-     *	    HTTP_RES res = HTTP_RES_init()
+     *	    HTTP_RES res = http_res_init()
      *	    ...
-     *	    HTTP_RES_set_header(&res, "Header-key", "Header-value")
-     * 	    char* msg_response = HTTP_RES_compose(res);
+     *	    http_res_set_header(&res, "Header-key", "Header-value")
+     * 	    char* msg_response = http_res_compose(res);
      * 	    ...
-     * 	    HTTP_RES_free(&res)
+     * 	    http_res_free(&res)
     */
-    LIST_PAIR_append(&(res->headers), key, value);
+    list_pair_append(&(res->headers), key, value);
 }
 
-HTTP_RES HTTP_RES_build_up(HTTP_STATUS status, const char* payload)
+HTTP_RES http_res_build_up(HTTP_STATUS status, const char* payload)
 {
     /*
-     *  todo @HTTP_RES_build_up build up a basic HTTP_RESPONSE without headers
+     *  todo @http_res_build_up build up a basic HTTP_RESPONSE without headers
      *  usage:
-     *	    HTTP_RES res = HTTP_RES_init()
+     *	    HTTP_RES res = http_res_init()
      *	    ...
-     *	    HTTP_RES_build_up(&res, "Hello world");
-     *	    HTTP_RES_set_header(&res, "Header-key", "Header-value")
-     * 	    char* msg_response = HTTP_RES_compose(res);
+     *	    http_res_build_up(&res, "Hello world");
+     *	    http_res_set_header(&res, "Header-key", "Header-value")
+     * 	    char* msg_response = http_res_compose(res);
      * 	    ...
-     * 	    HTTP_RES_free(&res)
+     * 	    http_res_free(&res)
     */
-    HTTP_RES res = HTTP_RES_init();
+    HTTP_RES res = http_res_init();
     res.status = status;
     res.version = __HTTP_VERSION__;
-    HTTP_RES_set_header(&res, "Server", __HTTP_SERVER__);
-    HTTP_RES_set_header(&res, "Connection", __HTTP_CONNECTION_STATE__);
+    http_res_set_header(&res, "Server", __HTTP_SERVER__);
+    http_res_set_header(&res, "Connection", __HTTP_CONNECTION_STATE__);
     res.payload = strdup(payload);
     return res;
 }

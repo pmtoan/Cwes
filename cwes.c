@@ -2,15 +2,18 @@
 #include <unistd.h>
 #include <wait.h>
 #include "modules/unix/x86_64-linux-gnu/socket/unix_x86_64_linux_tcp_socket.h"
+#include "modules/utilities/utils.h"
 #include "controller/cwes_controller.h"
 
 void signal_handler(int sig);
+
 int server;
+
 int main(int argc, char const *argv[])
 {
 	signal(SIGINT,signal_handler);
-    server = UNIX_X86_64_LINUX_tcp_socket_open_listener(__HTTP_PORT__);
-    _("%s - [INFO]   Cwes server running on 0::%d\n", STRING_timestamp(), __HTTP_PORT__);
+    server = unix_x86_64_linux_tcp_socket_open_listener(__HTTP_PORT__);
+    _("%s - [INFO] Cwes server running on 0::%d\n", time_get_timestamp(), __HTTP_PORT__);
     struct sockaddr_storage client_addr;
     unsigned int address_size = sizeof(client_addr);
     int connect;
@@ -26,30 +29,30 @@ int main(int argc, char const *argv[])
         {
             /* Can't accept connect from client */
             _("%s - [ERROR] Can't connect with %d.%d.%d.%d:%d\n",
-                   STRING_timestamp(),
+                   time_get_timestamp(),
                    ip[0], ip[1], ip[2], ip[3], port);
             continue;
         }
         _("%s - [INFO] Connect with %d.%d.%d.%d:%d\n",
-               STRING_timestamp(),
+               time_get_timestamp(),
                ip[0], ip[1], ip[2], ip[3], port);
 
         pid = fork();
         if (pid == 0)
         {
             signal(SIGINT, SIG_DFL);
-            UNIX_X86_64_LINUX_tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
-            UNIX_X86_64_LINUX_tcp_socket_send_msg(connect, CONTROLLER_control_everything(message));
+            unix_x86_64_linux_tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
+            unix_x86_64_linux_tcp_socket_send_msg(connect, controller_control_everything(message));
             close(connect);
         }
-        wait(NULL);
+        // wait(NULL);
         close(connect);
     }
 }
 
 void signal_handler(int sig)
 {
-    _("\n%s - [INFO]   Cwes server exit\n", STRING_timestamp());
+    _("\n%s - [INFO] Cwes server exit\n", time_get_timestamp());
     close(server);
     exit(0);
 }

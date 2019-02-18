@@ -1,14 +1,16 @@
 #ifndef __C_WES_LOADER_H__
 #define __C_WES_LOADER_H__
 
-#include "../modules/unix/x86_64-linux-gnu/unix_x86_64_linux_files.h"
+#include "../modules/unix/x86_64-linux-gnu/unix_x86_64_linux_file.h"
 #include "../modules/unix/x86_64-linux-gnu/unix_x86_64_linux_cmd.h"
-#include "../modules/utilities/utilities.h"
+#include "../modules/data_structure/list_string.h"
+#include "../modules/data_structure/list_pair.h"
+#include "../modules/utilities/utils.h"
 
-char* CONTROLLER_load(const char* bin, LIST_STRING params)
+char* controller_load(const char* bin, LIST_STRING params)
 {
     /*
-     *  todo @CONTROLLER_load load, run and get output of a binary file via BASH
+     *  todo @controller_load load, run and get output of a binary file via BASH
      *  **** NOTE ****
      *      -> use in LINUX environment only
      *  usage:
@@ -16,7 +18,7 @@ char* CONTROLLER_load(const char* bin, LIST_STRING params)
      *      LIST_STRING params = LIST_STRING_init()
      *      LIST_STRING_append(params, "-lsa")
      *      LIST_STRING_append(params, "/etc")
-     *      char* output = CONTROLLER_load("/bin/ls", params)
+     *      char* output = controller_load("/bin/ls", params)
     */
 
     char* cmd = (char*)malloc(__SIZE_LARGE__); // command line buffer
@@ -25,7 +27,7 @@ char* CONTROLLER_load(const char* bin, LIST_STRING params)
         sprintf(cmd, "%s \"%s\"", cmd, params.head->value);
         params.head = params.head->next;
     }
-    return UNIX_X86_64_LINUX_cmd(cmd);
+    return unix_x86_64_linux_cmd(cmd);
 }
 
 

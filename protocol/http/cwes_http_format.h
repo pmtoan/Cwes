@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../../modules/utilities/utilities.h"
+#include "../../modules/data_structure/list_pair.h"
+#include "../../modules/data_structure/list_string.h"
+#include "../../modules/utilities/utils.h"
 
 #define __HTTP_PORT__ 80
 #define __HTTPS_PORT__ 443

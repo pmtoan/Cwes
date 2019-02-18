@@ -1,19 +1,29 @@
-#ifndef __C_MODULES_UTILITIES_BYTES_H__
-#define __C_MODULES_UTILITIES_BYTES_H__
+#ifndef __DATA_STRUCTURE_BYTES_H__
+#define __DATA_STRUCTURE_BYTES_H__
 
-#include "types.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../core/types.h"
+
+/* --- bytes data structure --- */
+typedef struct BYTES
+{
+    int len;    // length of array
+    char* buffer; // bytes buffer
+}BYTES;
 
 /*----------------------------------------------------------------*/
-BYTES BYTES_init();
-void BYTES_free(BYTES* bytes);
-void BYTES_print(BYTES bytes);
-void BYTES_print_d(BYTES bytes);
-void BYTES_print_x(BYTES bytes);
-int BYTES_read_file(BYTES* buffer, const char* path);
-int BYTES_write_file(BYTES buffer, const char* path);
+BYTES bytes_init();
+void bytes_free(BYTES* bytes);
+void bytes_print(BYTES bytes);
+void bytes_print_d(BYTES bytes);
+void bytes_print_x(BYTES bytes);
+int bytes_read_file(BYTES* buffer, const char* path);
+int bytes_write_file(BYTES buffer, const char* path);
 /*----------------------------------------------------------------*/
 
-BYTES BYTES_init()
+BYTES bytes_init()
 {
     BYTES bytes;
     bytes.len = 0;
@@ -21,17 +31,17 @@ BYTES BYTES_init()
     return bytes;
 }
 
-void BYTES_free(BYTES* bytes)
+void bytes_free(BYTES* bytes)
 {
     free(bytes->buffer);
 }
 
-void BYTES_print(BYTES bytes)
+void bytes_print(BYTES bytes)
 {
-    BYTES_print_x(bytes);
+    bytes_print_x(bytes);
 }
 
-void BYTES_print_d(BYTES bytes)
+void bytes_print_d(BYTES bytes)
 {
     for (int i = 0; i < bytes.len; ++i)
     {
@@ -42,7 +52,7 @@ void BYTES_print_d(BYTES bytes)
     printf("\n");
 }
 
-void BYTES_print_x(BYTES bytes)
+void bytes_print_x(BYTES bytes)
 {
     for (int i = 0; i < bytes.len; ++i)
     {
@@ -53,7 +63,7 @@ void BYTES_print_x(BYTES bytes)
     printf("\n");
 }
 
-int BYTES_read_file(BYTES* buffer, const char* path)
+int bytes_read_file(BYTES* buffer, const char* path)
 {
     FILE* fp = fopen(path, "rb");
     if (fp == 0) return 0;
@@ -67,7 +77,7 @@ int BYTES_read_file(BYTES* buffer, const char* path)
     return fs;
 }
 
-int BYTES_write_file(BYTES buffer, const char* path)
+int bytes_write_file(BYTES buffer, const char* path)
 {
     FILE* fp = fopen(path, "wb");
     if (fp == 0) return 0;
@@ -76,4 +86,4 @@ int BYTES_write_file(BYTES buffer, const char* path)
     return buffer.len;
 }
 
-#endif // __C_MODULES_UTILITIES_BYTES_H__
+#endif // __DATA_STRUCTURE_BYTES_H__
