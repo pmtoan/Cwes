@@ -2,15 +2,12 @@
 #define __UTILITIES_FILE_H__
 
 #include "../core/types.h"
-#include "../data_structure/bytes.h"
 #include "utils_string.h"
 
 /*----------------------------------------------------------------*/
 unsigned long file_sizeof(const char* path);
 char* file_read_text(const char* path);
 void file_write_text(const char* path, char* buffer);
-BYTES file_read_bin(const char* path);
-void file_write_bin(const char* path, BYTES buffer);
 char* file_get_extension(const char* path);
 /*----------------------------------------------------------------*/
 
@@ -55,20 +52,6 @@ void file_write_text(const char* path, char* buffer)
     fwrite(buffer, strlen(buffer), 1, fp);
     fclose(fp);
 }
-
-BYTES file_read_bin(const char* path)
-{
-    BYTES bytes = BYTES_init();
-    BYTES_read_file(&bytes, path);
-    return bytes;
-}
-
-void file_write_bin(const char* path, BYTES buffer)
-{
-    BYTES_write_file(buffer, path);
-    return;
-}
-
 char* file_get_extension(const char* path)
 {
     /*
