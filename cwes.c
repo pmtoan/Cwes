@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
 #include <wait.h>
@@ -8,6 +10,8 @@
 void signal_handler(int sig);
 
 int server;
+pid_t pid_first;
+pid_t pid_second;
 
 int main(int argc, char const *argv[])
 {
@@ -37,15 +41,22 @@ int main(int argc, char const *argv[])
                time_get_timestamp(),
                ip[0], ip[1], ip[2], ip[3], port);
 
-        pid = fork();
-        if (pid == 0)
+        pid_first = fork();
+        if (pid_first == 0)
         {
             signal(SIGINT, SIG_DFL);
-            unix_x86_64_linux_tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
-            unix_x86_64_linux_tcp_socket_send_msg(connect, controller_control_everything(message));
+            pid_second = fork();
+            if (pid_second == 0)
+            {
+            	signal(SIGINT, SIG_DFL);
+            	unix_x86_64_linux_tcp_socket_read_msg(connect, message, __SIZE_EXTRA__);
+            	unix_x86_64_linux_tcp_socket_send_msg(connect, controller_control_everything(message));
+            	close(connect);
+            }
             close(connect);
+            exit(0);
         }
-        // wait(NULL);
+        wait(NULL);
         close(connect);
     }
 }
